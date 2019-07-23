@@ -1,4 +1,7 @@
 # 交互信息说明
+- 版本：V0.1.0
+- 时间：2019-07-22
+
 ## 基本的说明
 * 所有的中文采用UTF-8格式编码
 * 响应状态码如下:
@@ -31,6 +34,15 @@
 	]
 }
 ```
+
+## 获取用户是否注册
+### 请求信息
+|项目|类型|键名|说明|
+|--|--|--|
+|请求方式|POST|
+|url|预留|
+|unionid|string|unionid||
+
 
 ## 个人信息注册
 ### 请求信息
@@ -94,6 +106,7 @@
 |课程类型|string|course|一次发布一门课|
 |课程名称|string|course_name|
 |老师姓名|string|teacher_name|
+|老师id|int|people_id|
 |时间|int[]|time|每周七天，每天五个时间段,多个时段采用数组发送|
 |课程简介|string|introduction|小于100字|
 
@@ -102,6 +115,7 @@
 	"course": "语文",
 	"course_name": "精品数学课",
 	"teacher_name": "张抗抗",
+	"people_id": 172342
 	"time": [
 		14,
 		21
@@ -167,7 +181,7 @@
 		{
 			"course_id": 123243,
 			"course_name": "垃圾数学课",
-			"teacher_name": "张三",
+			"teacher_name": "张抗抗",
 			"introduction": "这是一个xxx的课程，谢谢！",
 			"time": [
 				14,
@@ -178,4 +192,33 @@
 }
 ```
 
+## 选课
 
+### 请求信息
+|项目|类型|键名|说明|
+|--|--|--|--|
+|请求方式|POST|
+|url|预留|
+|课程id|int|course_id|
+|学生id|int|people_id|
+
+```json
+{
+	"course_id": 123456,
+	"people_id": 234567
+}
+```
+
+### 响应信息
+|项目|类型|键名|说明|
+|--|--|--|--|
+|响应码|int|status|响应码表格|
+|响应信息|string|response|响应成功OK，失败说明原因|
+|订单id|int|order_id|
+```json
+{
+	"status": 10,
+	"response": "OK",
+	"order_id": 12345
+}
+```
