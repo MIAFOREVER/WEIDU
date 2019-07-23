@@ -1,4 +1,4 @@
-# 交互信息说明
+# WEIDU项目文档
 - 版本：V0.1.0
 - 时间：2019-07-22
 
@@ -34,14 +34,50 @@
 	]
 }
 ```
+## 业务逻辑
+![](http://assets.processon.com/chart_image/5d36c26ae4b02086110e0e3a.png)
+
+## 页面类型
+### 学生端
+- 个人信息，显示个人基本信息
+- 已选择的课程，
 
 ## 获取用户是否注册
 ### 请求信息
 |项目|类型|键名|说明|
-|--|--|--|
+|--|--|--|--|
 |请求方式|POST|
 |url|预留|
 |unionid|string|unionid||
+```json
+{
+	"unionid": "wx2389jnsd"
+}
+```
+
+### 响应信息
+|项目|类型|键名|说明|
+|--|--|--|--|
+|响应码|int|status|响应码表格|
+|响应信息|string|response|响应成功OK，失败说明原因|
+|是否注册|bool|register|
+|id|int|people_id|若已经注册|
+
+```json
+{
+	"status": 10,
+	"response": "OK",
+	"register": false
+}
+```
+```json
+{
+	"status": 10,
+	"response": "OK",
+	"register": true,
+	"people_id": 172637
+}
+```
 
 
 ## 个人信息注册
@@ -82,8 +118,6 @@
 ### 响应信息
 |项目|类型|键名|说明|
 |--|--|--|--|
-|请求方式|POST|
-|url|预留|
 |响应码|int|status|响应码表格|
 |响应信息|string|response|响应成功OK，失败说明原因|
 |学生或者老师id|int|people_id|学生或者老师的唯一id|
