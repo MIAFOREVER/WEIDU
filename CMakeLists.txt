@@ -7,4 +7,6 @@ aux_source_directory(. DIR_SRCS)
 # 添加头文件路径
 
 # 添加 math 子目录
-add_subdirectory(src)
+add_subdirectory(src/HttpServer)
+add_subdirectory(src/Log)
+add_subdirectory(src/Praser)

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <time.h>
+#include <stdio.h>
 #include "Log.h"
 
 using namespace std;
@@ -96,4 +97,64 @@ void Log::print(char* log, size_t length)
         cout << log[i];
     }
     cout << endl;
+}
+
+void Log::error(std::string log)
+{
+    string TTime = getTime();
+    printf("\033[41m");
+    fflush(stdout);
+    cout << "[" << TTime << "][error]:\t" << " " << log << endl;
+    printf("\033[0m");
+    fflush(stdout);
+}
+
+void Log::error(const char* log)
+{
+    string TTime = getTime();
+    printf("\033[41m");
+    fflush(stdout);
+    cout << "[" << TTime << "][error]:\t" << " " << log << endl;
+    printf("\033[0m");
+    fflush(stdout);
+}
+
+void Log::error(char* log)
+{
+    string TTime = getTime();
+    printf("\033[41m");
+    fflush(stdout);
+    cout << "[" << TTime << "][error]:\t" << " " << log << endl;
+    printf("\033[0m");
+    fflush(stdout);
+}
+
+void Log::error(const char* log, size_t length)
+{
+    string TTime = getTime();
+    printf("\033[41m");
+    fflush(stdout);
+    cout << "[" << TTime << "][info]:\t" << " " ;
+    for(int i = 0; i < length; i++)
+    {
+        cout << log[i];
+    }
+    cout << endl;
+    printf("\033[0m");
+    fflush(stdout);
+}
+
+void Log::error(char* log, size_t length)
+{
+    string TTime = getTime();
+    printf("\033[41m");
+    fflush(stdout);
+    cout << "[" << TTime << "][info]:\t" << " " ;
+    for(int i = 0; i < length; i++)
+    {
+        cout << log[i];
+    }
+    cout << endl;
+    printf("\033[0m");
+    fflush(stdout);
 }
