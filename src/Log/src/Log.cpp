@@ -65,22 +65,22 @@ string Log::getTime()
 void Log::print(std::string log)
 {
     string TTime = getTime();
-    cout << "[" << TTime << "][info]\t" << " " << log << endl;
+    cout << "[" << TTime << "][info]:\t" << " " << log << endl;
 }
 void Log::print(const char* log)
 {
     string TTime = getTime();
-    cout << "[" << TTime << "][info]\t" << " " << log << endl;
+    cout << "[" << TTime << "][info]:\t" << " " << log << endl;
 }
 void Log::print(char* log)
 {
     string TTime = getTime();
-    cout << "[" << TTime << "][info]\t" << " " << log << endl;
+    cout << "[" << TTime << "][info]:\t" << " " << log << endl;
 }
 void Log::print(const char* log, size_t length)
 {
     string TTime = getTime();
-    cout << "[" << TTime << "][info]\t" << " " ;
+    cout << "[" << TTime << "][info]:\t" << " " ;
     for(int i = 0; i < length; i++)
     {
         cout << log[i];
@@ -90,7 +90,7 @@ void Log::print(const char* log, size_t length)
 void Log::print(char* log, size_t length)
 {
     string TTime = getTime();
-    cout << "[" << TTime << "][info]\t" << " " ;
+    cout << "[" << TTime << "][info]:\t" << " " ;
     for(int i = 0; i < length; i++)
     {
         cout << log[i];

@@ -1,8 +1,10 @@
 #include "Praser.h"
+#include "Log.h"
 #include <iostream>
 using namespace std;
 void HttpPraser::HttpPostPraser(const string t, map<string, string>& header, map<string, string>& info)
 {
+    Log* log = Log::getPoint();
     string text = t; 
     string method;
     string url;
@@ -63,6 +65,8 @@ void HttpPraser::HttpPostPraser(const string t, map<string, string>& header, map
     value = text.substr(space + 1);
     info.insert(pair<string, string>(key, value));
     text = "";
+
+    log->print("Post infomation prase successfully");
 }
 
 void HttpPraser::HttpHeaderPraser(const string t, string& body, map<string, string>& header)
@@ -114,4 +118,27 @@ void HttpPraser::HttpPostJson(const std::string text, json& info)
 {
     json temp = json::parse(text.c_str());
     info = temp;
+}
+
+void HttpPraser::mapToHeader(map<string, string> info, string& text)
+{
+    map<string, string>::iterator it = info.begin();
+    for(it; it != info.end(); it++)
+    {
+        text += it->first;
+        text += ':';
+        text += it->second;
+        text += "\r\n";
+    }
+    text += "\r\n";
+}
+
+void HttpPraser::mapToTitle(map<string, string> info, string& text)
+{
+    text += info["version"];
+    text += ' ';
+    text += info["status_code"];
+    text += ' ';
+    text += info["status"];
+    text += "\r\n";
 }

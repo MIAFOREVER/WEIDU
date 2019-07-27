@@ -17,6 +17,7 @@
 #include <string>
 #include <iostream>
 #include <map>
+#include <thread>
 
 #include "Log.h"
 #include "Praser.h"
@@ -30,7 +31,7 @@ class HttpServer
     int                                 socket_fd;
     int                                 connect_fd; 
     struct sockaddr_in                  servaddr; 
-    char                                buff[MAXLINE];
+    char*                               buff;
     int                                 n;
     Log*                                log;
     HttpPraser                          praser;
@@ -41,7 +42,32 @@ class HttpServer
     std::map<std::string, void (*)(int, std::map<std::string, std::string>)>     funcList; 
 
     public:
+    /**
+     * @brief Construct a new Http Server object
+     * 
+     */
     HttpServer();
+
+    /**
+     * @brief Deconstruct a new Http Server object
+     * 
+     */
+    ~HttpServer();
+
+    /**
+     * @brief 
+     * 
+     */
     void serverListen();
+    
+    /**
+     * @brief express like firmwork
+     * 
+     * @param filepath 
+     * @param void(*)(int, std::map<std::string, std::string>))
+     * @return int 
+     */
     int get(std::string filepath, void (*)(int, std::map<std::string, std::string>));
+
+    void printRequest();
 };

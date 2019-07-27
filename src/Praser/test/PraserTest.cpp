@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 using namespace std;
-TEST(PraserTest,convertHeader)
+TEST(PraserTest, convertHeader)
 {
     HttpPraser p;
     string T = "POST /url.html HTTP/1.1\r\n";
@@ -35,7 +35,7 @@ TEST(PraserTest,convertHeader)
     EXPECT_EQ(temp, "ajkhd=kusdf&suidga=saduh&eiuruf=sadkgu&dsa=sdfk");
 }
 
-TEST(PraserTest,convertJson)
+TEST(PraserTest, convertJson)
 {
     HttpPraser p;
     map<string, string> header;
@@ -58,4 +58,26 @@ TEST(PraserTest,convertJson)
     p.HttpPostJson(temp, j);
     EXPECT_EQ(j["happy"], true);
     EXPECT_EQ(j["pi"], 3.141);
+}
+
+TEST(PraserTest, mapToHeader)
+{
+    HttpPraser p;
+    map<string, string> header;
+    header["context"] = "UTF-8";
+    header["location"] = "GUANGDONG";
+    string t;
+    p.mapToHeader(header, t);
+    EXPECT_EQ(t, "context:UTF-8\r\nlocation:GUANGDONG\r\n\r\n");
+}
+
+TEST(PraserTest, mapToTitle)
+{
+    HttpPraser p;
+    map<string, string> header;
+    header["version"] = "HTTP/1.1";
+    header["status_code"] = "200";
+    header["status"] = "OK";
+    string t;
+    p.mapToHeader(header, t);
 }

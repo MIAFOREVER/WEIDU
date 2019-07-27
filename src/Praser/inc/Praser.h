@@ -1,6 +1,6 @@
 /**
  * @file Praser.h
- * @author your name (you@domain.com)
+ * @author ZHANGHAO (zhangh527@mail2.sysu.edu.com)
  * @brief 
  * @version 0.1
  * @date 2019-07-26
@@ -45,4 +45,13 @@ class HttpPraser
      * @param info 
      */
     void HttpPostJson(const std::string text, json& info);
+
+    /**
+     * @brief convert json to http response header
+     * 
+     * @param info 
+     * @param text 
+     */
+    void mapToHeader(std::map<std::string, std::string> info, std::string& text);
+    void mapToTitle(std::map<std::string, std::string> info, std::string& text);
 };

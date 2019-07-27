@@ -9,11 +9,13 @@ pkg_search_module(GTEST REQUIRED gtest_main)
 include_directories(
     inc
     ../Tools
+    ../Log/inc
 )
 set(PraserTest 
     test/PraserTest.cpp 
     src/Praser.cpp
     ../Tools/json.hpp
+    ../Log/src/Log.cpp
 )
 add_executable(PraserTest ${PraserTest})
 target_link_libraries(PraserTest ${GTEST_LDFLAGS})

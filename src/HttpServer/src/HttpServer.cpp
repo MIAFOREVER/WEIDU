@@ -17,15 +17,23 @@
 
 #include <string>
 #include <map>
+#include <thread>
 using namespace std;
+
 HttpServer::HttpServer()
 {
     log = Log::getPoint();
     socket_fd = 0;
     connect_fd = 0; 
     memset(&servaddr, 0, sizeof(struct sockaddr_in));
-    memset(buff, 0, sizeof(char*) * MAXLINE);
+    buff = new char[MAXLINE];
     n = 0;
+}
+
+HttpServer::~HttpServer()
+{
+    delete buff;
+    close(socket_fd);
 }
 
 void HttpServer::serverListen()
@@ -53,8 +61,8 @@ void HttpServer::serverListen()
         printf("listen socket error: %s(errno: %d)\n",strerror(errno),errno);  
         exit(0);  
     }    
-    log->print("Listen process successfully!\n");
-    log->print("waiting for client's request\n");
+    log->print("Listen process successfully!");
+    log->print("waiting for client's request");
     while(1)
     {
         if((connect_fd = accept(socket_fd, (struct sockaddr*)NULL, NULL)) == -1)
@@ -66,11 +74,14 @@ void HttpServer::serverListen()
         buff[n] = '\0'; 
         text = buff;
         log->print("recv msg from client");
+
         praser.HttpHeaderPraser(text, body, header);
 
         if(header["method"] == "POST" && funcList[header["url"]] != nullptr)  
         {
-            (*funcList[header["url"]])(connect_fd, header);
+            log->print("Receive post request successfully");
+            thread t(*funcList[header["url"]], connect_fd, header);
+            t.detach();
         } 
     }  
     close(socket_fd);
@@ -79,4 +90,11 @@ void HttpServer::serverListen()
 int HttpServer::get(std::string filepath, void (*f)(int, std::map<std::string, std::string>))
 {
     funcList.insert(pair<string, void (*)(int, std::map<std::string, std::string>)>(filepath, f));
+}
+
+void HttpServer::printRequest()
+{
+    string temp = buff;
+    temp = "\n" + temp;
+    log->print(temp.c_str(), n);
 }
