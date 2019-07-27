@@ -5,13 +5,22 @@
 
 using namespace std;
 
-void calculate(int connect, std::map<std::string, std::string>info)
+void calculate(HttpServer* hs, int connect, std::map<std::string, std::string>info)
 {
     Log* log = Log::getPoint();
     log->print("run successfully!"); 
-    log->print(info["method"]);
-    log->print(info["url"]);
-    log->print(info["version"]);
+    log->print("method:" + info["method"]);
+    log->print("url:" + info["url"]);
+    log->print("version" + info["version"]);
+    
+    HttpPraser hp;
+    string title;
+    string header = "Content-Type: text/html\r\n\r\n";
+    string body = "<p>hello</p>";
+    hp.mapToTitle(hs->getGetTitle(), title);
+    hs->sendto(connect, title);
+    hs->sendto(connect, header);
+    hs->sendto(connect, body);
     close(connect);
 }
 

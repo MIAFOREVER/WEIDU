@@ -79,5 +79,6 @@ TEST(PraserTest, mapToTitle)
     header["status_code"] = "200";
     header["status"] = "OK";
     string t;
-    p.mapToHeader(header, t);
+    p.mapToTitle(header, t);
+    EXPECT_EQ(t, "HTTP/1.1 200 OK\r\n");
 }

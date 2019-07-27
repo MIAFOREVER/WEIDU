@@ -28,6 +28,14 @@ HttpServer::HttpServer()
     memset(&servaddr, 0, sizeof(struct sockaddr_in));
     buff = new char[MAXLINE];
     n = 0;
+
+    postHeader["version"] = "HTTP/1.1";
+    postHeader["status_code"] = "200";
+    postHeader["status"] = "OK";
+
+    getHeader["version"] = "HTTP/1.1";
+    getHeader["status_code"] = "200";
+    getHeader["status"] = "OK";
 }
 
 HttpServer::~HttpServer()
@@ -80,16 +88,21 @@ void HttpServer::serverListen()
         if(header["method"] == "POST" && funcList[header["url"]] != nullptr)  
         {
             log->print("Receive post request successfully");
-            thread t(*funcList[header["url"]], connect_fd, header);
+            thread t(*funcList[header["url"]], this, connect_fd, header);
             t.detach();
         } 
+        else
+        {
+            close(connect_fd);
+        }
+        
     }  
     close(socket_fd);
 }
 
-int HttpServer::get(std::string filepath, void (*f)(int, std::map<std::string, std::string>))
+int HttpServer::get(std::string filepath, UserThread f)
 {
-    funcList.insert(pair<string, void (*)(int, std::map<std::string, std::string>)>(filepath, f));
+    funcList.insert(pair<string, UserThread>(filepath, f));
 }
 
 void HttpServer::printRequest()
@@ -97,4 +110,54 @@ void HttpServer::printRequest()
     string temp = buff;
     temp = "\n" + temp;
     log->print(temp.c_str(), n);
+}
+
+int HttpServer::sendto(int connect, std::string buff)
+{
+    int retval = send(connect, buff.c_str(), buff.length(), 0);
+    return retval;
+}
+    
+int HttpServer::sendto(int connect, char* buff)
+{
+    int length = 0;
+    while(buff[length] != '0')
+    {
+        length++;
+    }
+    int retval = send(connect, buff, length, 0);
+    return retval;
+}
+    
+int HttpServer::sendto(int connect, const char* buff)
+{
+    int length = 0;
+    while(buff[length] != '0')
+    {
+        length++;
+    }
+    int retval = send(connect, buff, length, 0);
+    return retval;
+}
+    
+int HttpServer::sendto(int connect, char*, int length)
+{
+    int retval = send(connect, buff, length, 0);
+    return retval;
+}
+    
+int HttpServer::sendto(int connect, const char* buff, int length)
+{
+    int retval = send(connect, buff, length, 0);
+    return retval;
+}
+
+std::map<std::string, std::string> HttpServer::getPostTitle()
+{
+    return postHeader;
+}
+    
+std::map<std::string, std::string> HttpServer::getGetTitle()
+{
+    return getHeader;
 }

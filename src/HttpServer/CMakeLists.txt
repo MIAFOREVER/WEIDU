@@ -18,16 +18,9 @@ set(HttpServerTest
     ../Praser/src/Praser.cpp
     ../Log/src/Log.cpp
 )
-set(main
-    example/main.cpp
-    src/HttpServer.cpp 
-    ../Praser/src/Praser.cpp
-    ../Log/src/Log.cpp
-)
+
 add_executable(HttpServerTest ${HttpServerTest} )
-add_executable(main ${main})
 target_link_libraries(HttpServerTest ${GTEST_LDFLAGS} -pthread)
-target_link_libraries(main -pthread)
 target_compile_options(HttpServerTest PUBLIC ${GTEST_CFLAGS})
 
 include(CTest)

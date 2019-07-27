@@ -2,6 +2,12 @@
 #include "Log.h"
 #include <iostream>
 using namespace std;
+
+HttpPraser::HttpPraser()
+{
+    log = Log::getPoint();
+}
+
 void HttpPraser::HttpPostPraser(const string t, map<string, string>& header, map<string, string>& info)
 {
     Log* log = Log::getPoint();
@@ -122,6 +128,7 @@ void HttpPraser::HttpPostJson(const std::string text, json& info)
 
 void HttpPraser::mapToHeader(map<string, string> info, string& text)
 {
+    text = "";
     map<string, string>::iterator it = info.begin();
     for(it; it != info.end(); it++)
     {
@@ -135,10 +142,12 @@ void HttpPraser::mapToHeader(map<string, string> info, string& text)
 
 void HttpPraser::mapToTitle(map<string, string> info, string& text)
 {
+    text = "";
     text += info["version"];
     text += ' ';
     text += info["status_code"];
     text += ' ';
     text += info["status"];
     text += "\r\n";
+    log->print("Convert map to string successfully!");
 }

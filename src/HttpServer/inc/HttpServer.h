@@ -27,6 +27,9 @@
 
 class HttpServer
 {
+    public:
+    typedef void (*UserThread)(HttpServer*, int, std::map<std::string, std::string>);
+
     private:
     int                                 socket_fd;
     int                                 connect_fd; 
@@ -39,7 +42,11 @@ class HttpServer
     std::string                         body;
     std::map<std::string, std::string>  header;
     std::map<std::string, std::string>  info;
-    std::map<std::string, void (*)(int, std::map<std::string, std::string>)>     funcList; 
+    std::map<std::string, UserThread>   funcList; 
+
+    private:
+    std::map<std::string, std::string>  postHeader;
+    std::map<std::string, std::string>  getHeader;
 
     public:
     /**
@@ -61,13 +68,78 @@ class HttpServer
     void serverListen();
     
     /**
-     * @brief express like firmwork
+     * @brief Express like firmwork
      * 
      * @param filepath 
      * @param void(*)(int, std::map<std::string, std::string>))
      * @return int 
      */
-    int get(std::string filepath, void (*)(int, std::map<std::string, std::string>));
+    int get(std::string filepath, UserThread);
 
+    /**
+     * @brief Print full buffer message
+     * 
+     */
     void printRequest();
+
+    /**
+     * @brief Send function
+     * 
+     * @param connect 
+     * @param buff 
+     * @return int 
+     */
+    int sendto(int connect, std::string buff);
+    
+    /**
+     * @brief Send function
+     * 
+     * @param connect 
+     * @param buff 
+     * @return int 
+     */
+    int sendto(int connect, char* buff);
+    
+    /**
+     * @brief Send function
+     * 
+     * @param connect 
+     * @param buff 
+     * @return int 
+     */
+    int sendto(int connect, const char* buff);
+    
+    /**
+     * @brief Send function
+     * 
+     * @param connect 
+     * @param buff 
+     * @param length 
+     * @return int 
+     */
+    int sendto(int connect, char* buff, int length);
+    
+    /**
+     * @brief Send function
+     * 
+     * @param connect 
+     * @param buff 
+     * @param length 
+     * @return int 
+     */
+    int sendto(int connect, const char* buff, int length);
+
+    /**
+     * @brief Get the Post Title object
+     * 
+     * @return std::map<std::string, std::string> 
+     */
+    std::map<std::string, std::string> getPostTitle();
+
+    /**
+     * @brief Get the Get Title object
+     * 
+     * @return std::map<std::string, std::string> 
+     */
+    std::map<std::string, std::string> getGetTitle();
 };

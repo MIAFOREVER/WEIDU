@@ -12,6 +12,8 @@
 #include <string>
 #include <map>
 #include <json.hpp>
+
+#include "Log.h"
 using json = nlohmann::json;
 /**
  * @brief HttpPraser module
@@ -19,8 +21,12 @@ using json = nlohmann::json;
  */
 class HttpPraser
 {
+    private:
+
+    Log* log;
+
     public:
-    
+    HttpPraser();
     /**
      * @brief POST Praser
      * 
@@ -47,11 +53,18 @@ class HttpPraser
     void HttpPostJson(const std::string text, json& info);
 
     /**
-     * @brief convert json to http response header
+     * @brief 
      * 
      * @param info 
      * @param text 
      */
     void mapToHeader(std::map<std::string, std::string> info, std::string& text);
+
+    /**
+     * @brief 
+     * 
+     * @param info 
+     * @param text 
+     */
     void mapToTitle(std::map<std::string, std::string> info, std::string& text);
 };
