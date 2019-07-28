@@ -28,7 +28,7 @@
 class HttpServer
 {
     public:
-    typedef void (*UserThread)(HttpServer*, int, std::map<std::string, std::string>);
+    typedef void (*UserThread)(HttpServer*, int, std::map<std::string, std::string>, std::string body);
 
     private:
     int                                 socket_fd;
@@ -76,6 +76,14 @@ class HttpServer
      */
     int get(std::string filepath, UserThread);
 
+    /**
+     * @brief 
+     * 
+     * @param header 
+     * @param hs 
+     */
+    void response(std::map<std::string, std::string> header, HttpServer* hs);
+    
     /**
      * @brief Print full buffer message
      * 
@@ -142,4 +150,12 @@ class HttpServer
      * @return std::map<std::string, std::string> 
      */
     std::map<std::string, std::string> getGetTitle();
+
+    /**
+     * @brief Get the Http Praser object
+     * 
+     * @return HttpPraser 
+     */
+    HttpPraser getHttpPraser();
+
 };

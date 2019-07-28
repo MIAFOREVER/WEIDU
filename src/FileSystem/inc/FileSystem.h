@@ -9,8 +9,13 @@
  * 
  */
 #include <fstream>
+#include <string>
 
 class FileSystem
 {
+    private:
+    char* buff;
 
+    public:
+    void read(std::string filename, char* buff, int length);
 };

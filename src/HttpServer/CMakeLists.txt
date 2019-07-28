@@ -14,7 +14,8 @@ include_directories(
 )
 set(HttpServerTest
     test/HttpServerTest.cpp 
-    src/HttpServer.cpp 
+    src/HttpServer.cpp
+    src/status.cpp 
     ../Praser/src/Praser.cpp
     ../Log/src/Log.cpp
 )

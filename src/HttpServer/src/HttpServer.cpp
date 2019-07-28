@@ -9,6 +9,8 @@
  * 
  */
 #include "HttpServer.h"
+#include "status.h"
+
 #include <string.h> 
 #include <errno.h>
 #include <stdio.h>  
@@ -88,14 +90,20 @@ void HttpServer::serverListen()
         if(header["method"] == "POST" && funcList[header["url"]] != nullptr)  
         {
             log->print("Receive post request successfully");
-            thread t(*funcList[header["url"]], this, connect_fd, header);
+            thread t(*funcList[header["url"]], this, connect_fd, header, body);
             t.detach();
         } 
+        else if(header["method"] == "GET")
+        {
+            log->print("Receive get request successfully");
+            thread t(*response404, this, connect_fd, header);
+            t.detach();
+        }
         else
         {
+            log->error("Receive post request successfully and url can't find");
             close(connect_fd);
         }
-        
     }  
     close(socket_fd);
 }
@@ -161,3 +169,9 @@ std::map<std::string, std::string> HttpServer::getGetTitle()
 {
     return getHeader;
 }
+
+HttpPraser HttpServer::getHttpPraser()
+{
+    return praser;
+}
+

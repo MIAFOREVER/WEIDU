@@ -47,7 +47,7 @@
 |项目|类型|键名|说明|
 |--|--|--|--|
 |请求方式|POST|
-|url|预留|
+|url|/login|
 |unionid|string|unionid||
 ```json
 {
@@ -83,9 +83,9 @@
 ## 个人信息注册
 ### 请求信息
 |项目|类型|键名|说明|
-|--|--|--|
+|--|--|--|--|
 |请求方式|POST|
-|url|预留|
+|url|/register|
 |类型|int|type|1是学生，2是老师，预留|
 |姓名|string|name|
 |年龄|int|age|判断范围|
@@ -137,6 +137,8 @@
 
 |项目|类型|键名|说明|
 |--|--|--|--|
+|请求方式|POST|
+|url|/publish|
 |课程类型|string|course|一次发布一门课|
 |课程名称|string|course_name|
 |老师姓名|string|teacher_name|
@@ -179,7 +181,7 @@
 |项目|类型|键名|说明|
 |--|--|--|--|
 |请求方式|POST|
-|url|预留|
+|url|/query_course|
 |输入的关键字|string|content|
 
 
@@ -232,7 +234,7 @@
 |项目|类型|键名|说明|
 |--|--|--|--|
 |请求方式|POST|
-|url|预留|
+|url|/confirm_course|
 |课程id|int|course_id|
 |学生id|int|people_id|
 
